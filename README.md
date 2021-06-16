@@ -160,6 +160,7 @@ For example, fhe following command gives additional put/get authority for queue 
 
 <br />
 Verify that security has been enabled
+
 ```
 runmqsc QMGR1 
 dis chl(DEV.APP.SVRCONN)
