@@ -22,10 +22,13 @@ List the pulled images
 ```
 <br /><br />
 
-## Step 3. Create TLS objects
+## Step 3. Create Server TLS objects
 We need to create a server key and certificate. Then, we need to create a client keystore, either using JMS or other MQ client libraries.
 
+<br />
+
 ### Create a server key and certificate
+
 To create the certificates we need to secure our channel, we will use OpenSSL, which is installed by default on most machines. Check if you have OpenSSL installed by entering this command in your terminal:
 ```
 openssl version
@@ -47,10 +50,9 @@ You should see the information you entered and other certificate properties such
 
 <br />
 
-### Create a client keystore
-<br />
+## Step 4. Create Client keystore and import server cert into it
 
-**Creating a JMS keystore (Java)**
+### Creating a JMS keystore (Java)
 
 For our example, MQ explorer support jks as a keystore. We will use keytool (a Java security tool), which is included with Java JREs and SDKs. To create a .jks client keystore and import our sever certificate into it, enter:
 
@@ -64,9 +66,8 @@ Listing the contents of the directory should yield something like this:
 clientkey.jks   key.crt     key.key
 ```
 <br />
-<br />
 
-**Creating a keystore for MQI-based client applications (C, Python, Node.js, Golang)**
+### Creating a keystore for MQI-based client applications (C, Python, Node.js, Golang)
 
 If you’re using MQI, whatever language you write your application in (such as C, Python, Node.js, or Golang), these steps will help you create a client keystore and import our server certificate into it.
 
@@ -86,8 +87,9 @@ If you list the contents of the current directory, you should see these files
 ```
 clientkey.kdb   clientkey.sth   clientkey.jks   key.crt     key.key
 ```
+<br /><br />
 
-## Step 4. Set up the MQ server
+## Step 5. Set up the MQ server
 ```
 docker run \
 -e LICENSE=accept \
@@ -200,7 +202,7 @@ In this tutorial, we use anonymous (server-only) authentication, as we authentic
 We will need to specify the same CipherSpec on the client side for the client and server to be able to connect and carry out the TLS handshake.
 <br /><br />
 
-## Step 5. Installing MQ Explorer and connect to MQ Server
+## Step 6. Installing MQ Explorer and connect to MQ Server
 Install 
 [MQ Explorer ecplipse plugin](https://marketplace.eclipse.org/content/ibm-mq-explorer-version-92) into compatible eclipse based IDE
 
