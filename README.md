@@ -3,6 +3,7 @@
 ## Step 1. Install Docker
 If you have already installed Docker on your system, check to see what version is installed. If your Docker version is called docker or docker-engine, you must uninstall these before installing the latest docker-ce version.
 
+<br /><br />
 
 ## Step 2. Get the MQ in Docker image
 Containers are run from images and images are built from a specification listed in a Dockerfile. We will use a pre-built IBM MQ server image from Docker Hub so that we can just run our container without having to build an image. We will end up with a working MQ installation and a queue manager that is pre-configured with objects ready for developers to work with.
@@ -19,12 +20,10 @@ List the pulled images
 ```
  docker images
 ```
-
+<br /><br />
 
 ## Step 3. Create TLS objects
 We need to create a server key and certificate. Then, we need to create a client keystore, either using JMS or other MQ client libraries.
-
-<br /><br />
 
 ### Create a server key and certificate
 To create the certificates we need to secure our channel, we will use OpenSSL, which is installed by default on most machines. Check if you have OpenSSL installed by entering this command in your terminal:
@@ -46,10 +45,11 @@ openssl x509 -text -noout -in key.crt
 ```
 You should see the information you entered and other certificate properties such as the public key and the signature algorithm.
 
-<br /><br />
+<br />
 
 ### Create a client keystore
 <br />
+
 **Creating a JMS keystore (Java)**
 
 For our example, MQ explorer support jks as a keystore. We will use keytool (a Java security tool), which is included with Java JREs and SDKs. To create a .jks client keystore and import our sever certificate into it, enter:
@@ -64,8 +64,10 @@ Listing the contents of the directory should yield something like this:
 clientkey.jks   key.crt     key.key
 ```
 <br />
+<br />
 
 **Creating a keystore for MQI-based client applications (C, Python, Node.js, Golang)**
+
 If you’re using MQI, whatever language you write your application in (such as C, Python, Node.js, or Golang), these steps will help you create a client keystore and import our server certificate into it.
 
 MQ security command line tool, runmqakm. Enter this command to create a keystore in .kdb format and store the password in a .sth file. In this example, we used the password passw0rd but you can change this to be one of your choosing.
@@ -117,11 +119,11 @@ Accessing docker mq TTY
 ```
 docker exec -it mq /bin/bash
 ```
-
+<br />
 Issue these setmqaut commands to grant minimal authority to the userID.
 
 The purpose of the following setmqaut commands is:
-
+<br />
 GENERAL: Grant authority to access the queue manager.
 ```
 setmqaut -m QMGR1 -t qmgr -p app +connect +inq +dsp
@@ -153,7 +155,7 @@ For example, fhe following command gives additional put/get authority for queue 
   ```setmqaut -m QMGR1 -t q -n Q1 -p app +inq +browse +get +put +dsp```
 
 
-
+<br />
 Verify that security has been enabled
 ```
 runmqsc QMGR1 
@@ -190,7 +192,7 @@ We see that the SSLCIPH option has been configured to use the ANY_TLS12 CipherSp
 
 In this tutorial, we use anonymous (server-only) authentication, as we authenticate the client with the application name and password. The CERTLABL option is the label for the certificate we supplied implicitly during the Docker run step above.
 
-![alt text](https://github.ibm.com/Falix-Chong/ocp/blob/master/images/tls-1-2-way-authentication.jpeg?raw=true)
+![alt text](https://github.com/falixchong/ibmmq-container/blob/main/tls-1-2-way-authentication.jpeg?raw=true)
 
 1. Anonymous authentication: The server provides a certificate to the client.
 2. Mutual authentication: Both the server and the client provide a certificate and authenticate each other.
