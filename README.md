@@ -90,6 +90,7 @@ clientkey.kdb   clientkey.sth   clientkey.jks   key.crt     key.key
 <br /><br />
 
 ## Step 5. Set up the MQ server
+Run below command to run a MQ container
 ```
 docker run \
 -e LICENSE=accept \
@@ -121,11 +122,11 @@ Accessing docker mq TTY
 ```
 docker exec -it mq /bin/bash
 ```
-<br />
+
 Issue these setmqaut commands to grant minimal authority to the userID.
 
 The purpose of the following setmqaut commands is:
-<br />
+
 GENERAL: Grant authority to access the queue manager.
 ```
 setmqaut -m QMGR1 -t qmgr -p app +connect +inq +dsp
